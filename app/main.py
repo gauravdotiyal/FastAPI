@@ -29,6 +29,6 @@ app.include_router(vote.router)
 # this is the decorator for fastapi == path, operation, function to make api request 
 @app.get("/")
 async def root():
-    return {"message":"How are the people of the for new changes World"}
+    return {"status":"ok"}
 
 
