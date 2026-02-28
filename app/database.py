@@ -5,9 +5,17 @@ import psycopg
 import time 
 from . config import settings
 
-SQLALCHEMY_DATABASE_URL=f'postgresql://{settings.database_username}:{settings.database_password}@{settings.database_hostname}:{settings.database_port}/{settings.database_name}'
+# SQLALCHEMY_DATABASE_URL=f'postgresql://{settings.database_username}:{settings.database_password}@{settings.database_hostname}:{settings.database_port}/{settings.database_name}'
 
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
+
+DATABASE_URL = settings.database_url
+
+if DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+
+engine = create_engine(DATABASE_URL)
+
+# engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
 SessionLocal= sessionmaker(autocommit=False , autoflush=False, bind=engine)
 
