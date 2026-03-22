@@ -85,7 +85,7 @@ async def update_post(id:int, updated_post : schemas.PostCreate, db:Session= Dep
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"Post with id : {id} does not exist" )
     
-    if post.first().owner_id != current_user.id:
+    if post.owner_id != current_user.id:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=f"Not authorized to perform requested action")
     
     # post_query.update({'title':'Updated post', 'content':'This is the updated content'}, synchronize_session=False)

@@ -13,7 +13,7 @@ async def vote(vote: schemas.Vote, db:Session= Depends(database.get_db), current
     
     post = db.query(models.Post).filter(models.Post.id==vote.post_id).first()
     if not post:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, details=
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=
                             f"The post with {vote.post_id} does not exist")
     
     vote_query = db.query(models.Vote).filter(models.Vote.post_id==vote.post_id,models.Post.owner_id==current_user.id)
@@ -31,7 +31,7 @@ async def vote(vote: schemas.Vote, db:Session= Depends(database.get_db), current
         return {"message":"Vote added successful"}
     else:
         if not found_vote:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, details="Vote doesn't exist")
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Vote doesn't exist")
         
         vote_query.delete(synchronize_session=False)
         db.commit()
